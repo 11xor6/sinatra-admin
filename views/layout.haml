@@ -1,11 +1,19 @@
+!!! XML
 !!!
 %html
   %head
     %title= @title
-    = @include
+    = yield_content :css
+    = yield_content :include
   %body
+    #ness-image
+      %a{ :href => "/" }
+        %img{ :src => "img/LargeChicletNoBG.png" }
+
     #header
       =haml :header, :layout => false
+    #navigation
+      =haml :navigation, :layout => false
     #content
       =yield
     #footer

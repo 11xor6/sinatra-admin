@@ -1,0 +1,51 @@
+body
+{
+	background-color: #ddd;
+	padding-bottom: 300px;
+
+}
+
+table,th, td
+{
+	border: 1px solid black;
+	font-size: 13px;
+	padding: 4px;
+
+  table
+  {
+    border-collapse:collapse;
+  }
+  td img
+  {
+    height: 48px;
+  }
+
+  th
+  {
+    padding-top: 2px;
+    padding-bottom: 2px;
+  }
+}
+
+tr:nth-child(odd)
+{
+	background-color:#eee;
+}
+tr:nth-child(even)
+{
+	background-color:#fff;
+}
+
+#canonical
+{
+	font-weight: bold;
+}
+
+#ness-image
+{
+	float:right;
+  img {
+    height: 128px;
+  }
+
+}
