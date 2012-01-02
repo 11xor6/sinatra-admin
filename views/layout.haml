@@ -1,0 +1,12 @@
+!!!
+%html
+  %head
+    %title= @title
+    = @include
+  %body
+    #header
+      =haml :header, :layout => false
+    #content
+      =yield
+    #footer
+      =haml :footer, :layout => false
