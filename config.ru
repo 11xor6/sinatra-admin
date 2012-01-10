@@ -3,7 +3,11 @@ require 'rubygems'
 require 'bundler'
 require 'sinatra'
 
-require 'src/main/ruby/main_app'
+$source_root = "src/main/ruby/"
+$resource_root = "src/main/resource/"
+
+require $source_root + 'main_app'
+
 set :run, false
 set :environment, :development
 run Sinatra::Application

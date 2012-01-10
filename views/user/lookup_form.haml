@@ -1,0 +1,10 @@
+%article
+  %form{ :action => @action, :method => "post" }
+    %fieldset
+      %label{ :for => "id"}
+        Account or Source ID:
+      %input#id{ :type => "text", :name => "id", :size => "12", :value => @id.nil? ? "" : @id }
+      %select#environment{:name => "environment"}
+        %option{ :value => "production", :selected => !@environment.nil? && @environment == "production" ? "true" : nil } Production
+        %option{ :value => "staging", :selected => !@environment.nil? && @environment == "staging" ? "true" : nil } Staging
+      %input{ :type => "submit", :value => "Lookup ID"}

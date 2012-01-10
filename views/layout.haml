@@ -1,20 +1,31 @@
-!!! XML
-!!!
-%html
+<!doctype html>
+
+%html{:class => "no-js", :lang => "en"}
   %head
-    %title= @title
+    %meta{ :charset => "utf-8" }
+    %meta{ :content => "IE=edge,chrome=1", :'http-equiv' => "X-UA-Compatible" }
+    %meta{ :name => "viewport", :content => "width=device-width,initial-scale=1" }
+    %title= MainApp::get_window_title
+
+    = stylesheet_link_tag "style"
+    = javascript_include_tag"libs/modernizr-2.0.6.min"
+
     = yield_content :css
     = yield_content :include
-  %body
-    #ness-image
-      %a{ :href => "/" }
-        %img{ :src => "img/LargeChicletNoBG.png" }
 
-    #header
-      =haml :header, :layout => false
-    #navigation
-      =haml :navigation, :layout => false
-    #content
-      =yield
-    #footer
-      =haml :footer, :layout => false
+  %body
+    #header-container
+      = haml :header
+
+    #main-container
+      #main{ :class => "wrapper clearfix" }
+        %aside
+          = haml :left_navigation
+        = yield
+
+  #footer-container
+    = haml :footer
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.1.min.js"><\/script>')</script>
+  = javascript_include_tag "script"

@@ -1,1 +1,6 @@
-Header!
+%header{ :class => "wrapper clearfix" }
+  %h1#title
+    %img#ness-image{ :src => "img/LargeChicletNoBG.png"}
+    = MainApp::get_header_title
+  %nav
+    = haml :navigation

@@ -1,0 +1,43 @@
+= haml :"user/lookup_form"
+%article
+  %h3
+    %img{ :src => @user["photoUrl"]}
+    = @user["name"]
+
+  - if @user["attributes"].count > 0
+    %table
+      %tr
+        %th Attributes
+      - @user["attributes"].each do |attribute|
+        %tr
+          %td= attribute
+  %br/
+  - if @user["metadata"].count > 0
+    %table
+      %tr
+        %th Name
+        %th Metadata
+      - @user["metadata"].each_pair do |name, metadata|
+        %tr
+          %td= name
+          %td= metadata
+
+-#// Attributes
+-#if(count($item["attributes"]) > 0 OR count($account["attributes"]) > 0) {
+-#  echo "<table><tr><th>Attributes</th></tr>";
+-#  $merged = array_unique(array_merge($item["attributes"], $account["attributes"]));
+-#  foreach($merged as $attr){
+-#    echo "<tr><td>$attr</td></tr>";
+-#  }
+-#  echo "</table></br>";
+-#}
+-#
+-#// Metadata
+-#if(count($item["metadata"]) > 0 OR count($account["metadata"]) > 0) {
+-#  echo "<table><tr><th>Name</th><th>Metadata</th></tr>";
+-#  $merged = array_merge($item["metadata"], $account["metadata"]);
+-#  foreach($merged as $name => $meta){
+-#    echo "<tr><td>$name</td><td>$meta</td></tr>";
+-#  }
+-#  echo "</table><br/>";
+-#}
