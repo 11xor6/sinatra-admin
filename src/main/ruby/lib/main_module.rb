@@ -84,6 +84,7 @@ module MainModule
   def MainModule.generate_inline_route(method, tool)
     path = tool["path"]
     url = tool["url"]
+    styles = tool["styles"]
 
     case method.downcase
       when "get"
@@ -91,31 +92,56 @@ module MainModule
           query = MainModule.generate_query({:params => params.to_json, :from => "admin"})
           uri = URI(url + query)
           res = Net::HTTP.get_response(uri)
-
-          haml :inline, :locals => {:body => res.body}
+          pp styles
+          haml :inline, :locals => {:body => res.body, :styles => styles}
         end
       when "post"
         route = post path do
-          uri = URI(url)
-          req = Net::HTTP::Post.new(uri.path)
-          req.set_form_data('from' => 'admin', 'params' => params.to_json)
+          body = MainModule.retrieve_inline_body(url, params, method)
 
-          res = Net::HTTP.start("localhost", 80) do |http|
-            http.request(req)
-          end
-
-          haml :inline, :locals => {:body => res.body}
+          haml :inline, :locals => {:body => body, :styles => styles}
         end
-      else
+      when "put"
+        route = put path do
+          body = MainModule.retrieve_inline_body(url, params, method)
 
+          haml :inline, :locals => {:body => body, :styles => styles}
+        end
+      when "delete"
+        route = put path do
+          body = MainModule.retrieve_inline_body(url, params, method)
+
+          haml :inline, :locals => {:body => body, :styles => styles}
+        end
+      when "head"
+        route = put path do
+          body = MainModule.retrieve_inline_body(url, params, method)
+
+          haml :inline, :locals => {:body => body, :styles => styles}
+        end
+
+      else
+        # Here we are dynamically generate a routes for the unknown method.
+        # This will probably throw an exception if the method doesn't exist.
+        this.method(method.downcase!.to_sym).call tool["path"] do
+          body = MainModule.retrieve_inline_body(url, params, method)
+
+          haml :inline, :locals => {:body => body, :styles => styles}
+        end
     end
     @@routes.store RoutePair.new(method, path), route
 
-    # Here we are dynamically generate a routes for the unknown method.
-    # This will probably throw an exception if the method doesn't exist.
-    #this.method(method.downcase!.to_sym).call tool["path"] do
-    #  haml :iframe, :locals => {:url => tool["url"], :params => params}
-    #end
+  end
+
+  def MainModule.retrieve_inline_body(url, params, method)
+    uri = URI(url)
+    req = Net::HTTP::Post.new(uri.path)
+    req.set_form_data('from' => 'admin', 'method' => method, 'params' => params.to_json)
+
+    res = Net::HTTP.start("localhost", 80) do |http|
+      http.request(req)
+    end
+    res.body
   end
 
   def MainModule.generate_query(params)
