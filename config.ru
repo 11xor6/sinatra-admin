@@ -1,13 +1,1 @@
-#\ -p 8080
-require 'rubygems'
-require 'bundler'
-require 'sinatra'
-
-$source_root = "src/main/ruby/"
-$resource_root = "src/main/resource/"
-
-require $source_root + 'main_app'
-
-set :run, false
-set :environment, :development
-run Sinatra::Application
+src/main/galaxy/config.ru

@@ -1,0 +1,5 @@
+#!/usr/bin/env jruby
+
+$:.unshift "#{File.dirname(__FILE__)}/../lib"
+
+require 'jetty-rackup'

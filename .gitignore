@@ -1,6 +1,5 @@
 *.iml
 .idea
-.gems
 .sass-cache
 Gemfile.lock
 target
