@@ -77,11 +77,25 @@
             </goals>
             <configuration>
               <args>
-                -e ENV['GEM_HOME']=File.join(Dir.pwd,'.gems');ENV['GEM_PATH']=File.join(Dir.pwd,'.gems');ENV['BUNDLE_GEMFILE']=File.join(Dir.pwd,'Gemfile');require'rubygems';require'bundler';require'bundler/cli';cli=Bundler::CLI.new;cli.install
+                -e
+                ENV['GEM_HOME']=File.join(Dir.pwd,'.gems');ENV['GEM_PATH']=File.join(Dir.pwd,'.gems');ENV['BUNDLE_GEMFILE']=File.join(Dir.pwd,'Gemfile');require'rubygems';require'bundler';require'bundler/cli';cli=Bundler::CLI.new;cli.install
               </args>
             </configuration>
           </execution>
         </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <version>2.2.2</version>
+        <configuration>
+          <filters>
+            <filter>src/assemble/filter.properties</filter>
+          </filters>
+          <descriptors>
+            <descriptor>src/assemble/admin-assembly.xml</descriptor>
+          </descriptors>
+          <finalName>sinatra-admin</finalName>
+        </configuration>
       </plugin>
     </plugins>
   </build>

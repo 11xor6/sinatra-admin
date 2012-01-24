@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<assembly
+        xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
+
+  <id>standalone</id>
+  <formats>
+    <format>tar.gz</format>
+  </formats>
+  <includeBaseDirectory>false</includeBaseDirectory>
+
+  <files>
+    <file>
+      <source>config.prod.ru</source>
+      <outputDirectory>/</outputDirectory>
+      <destName>config.ru</destName>
+      <filtered>true</filtered>
+    </file>
+    <file>
+      <source>config.json</source>
+      <outputDirectory>/</outputDirectory>
+      <fileMode>664</fileMode>
+      <filtered>false</filtered>
+    </file>
+    <file>
+      <source>control.rb</source>
+      <outputDirectory>/</outputDirectory>
+      <fileMode>755</fileMode>
+      <filtered>false</filtered>
+    </file>
+  </files>
+
+  <fileSets>
+    <fileSet>
+      <directory>.</directory>
+      <outputDirectory>/</outputDirectory>
+      <includes>
+        <include>.gems/</include>
+        <include>public/</include>
+        <include>views/</include>
+      </includes>
+      <fileMode>644</fileMode>
+    </fileSet>
+    <fileSet>
+      <directory>src/main/ruby</directory>
+      <outputDirectory>ruby/</outputDirectory>
+      <fileMode>644</fileMode>
+    </fileSet>
+  </fileSets>
+
+  <dependencySets>
+    <!--
+         ========================================================================
+         =
+         = Move all the dependency jars into the lib folder. Rename them to contain
+         = the group id of the jar.
+         =
+         ========================================================================
+    -->
+    <dependencySet>
+      <outputDirectory>/lib</outputDirectory>
+      <useProjectArtifact>true</useProjectArtifact>
+      <useTransitiveDependencies>true</useTransitiveDependencies>
+      <directoryMode>0777</directoryMode>
+      <fileMode>0644</fileMode>
+      <outputFileNameMapping>
+        ${artifact.groupId}-${artifact.artifactId}-${artifact.version}${dashClassifier?}.${artifact.extension}
+      </outputFileNameMapping>
+      <includes>
+        <include>*:jar:*</include>
+      </includes>
+    </dependencySet>
+  </dependencySets>
+</assembly>

@@ -22,6 +22,7 @@ module MainModule
 
     config = parse_config
     if config.nil?
+      # Config hasn't changed; nothing to do.
       return
     end
 
@@ -89,10 +90,10 @@ module MainModule
     case method.downcase
       when "get"
         route = get path do
-          query = MainModule.generate_query({:params => params.to_json, :from => "admin"})
+          query = MainModule.generate_query({:params => URI.escape(params.to_json), :from => "admin"})
           uri = URI(url + query)
           res = Net::HTTP.get_response(uri)
-          pp styles
+
           haml :inline, :locals => {:body => res.body, :styles => styles}
         end
       when "post"
@@ -136,7 +137,7 @@ module MainModule
   def MainModule.retrieve_inline_body(url, params, method)
     uri = URI(url)
     req = Net::HTTP::Post.new(uri.path)
-    req.set_form_data('from' => 'admin', 'method' => method, 'params' => params.to_json)
+    req.set_form_data('from' => 'admin', 'method' => method, 'params' => URI.escape(params.to_json))
 
     res = Net::HTTP.start("localhost", 80) do |http|
       http.request(req)
@@ -146,9 +147,7 @@ module MainModule
 
   def MainModule.generate_query(params)
     query = ""
-    pp params
     params.each_pair do |key, value|
-      pp key, value
       if query == ""
         query = "?"
       else
@@ -172,18 +171,5 @@ module MainModule
     end
     path
   end
-
-#class ParamsJson
-#  def initialize(params)
-#    @params = params
-#  end
-#
-#  def to_json(*a)
-#    {
-#        'json_class' => self.class.name,
-#        'data' => @params
-#    }.to_json(*a)
-#  end
-#end
 
 end
