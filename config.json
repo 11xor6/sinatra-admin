@@ -6,7 +6,8 @@
       , {"path": "/jenkins", "name": "Jenkins", "type": "iframe", "url": "http://jenkins.trumpet.io", "methods": ["ALL"], "routes": []}
       , {"path": "/crowd", "name": "Crowd", "type": "iframe", "url": "http://crowd.trumpet.io", "methods": ["ALL"], "routes": []}
       , {"path": "/depot", "name": "Depot", "type": "iframe", "url": "https://depot.trumpet.io", "methods": ["ALL"], "routes": []}
-      , {"path": "/account", "name": "Account Lookup", "type": "inline", "url": "http://localhost/account.php", "methods": ["ALL"], "styles": ["http://localhost/css/admin.css"], "routes": []}
+      , {"path": "/account", "name": "Account Lookup", "type": "inline", "url": "http://web.tools.nessops.net/account.php", "methods": ["ALL"], "styles": ["http://localhost/css/admin.css"], "routes": []}
+      , {"path": "/discovery", "name": "Discovery Status", "type": "inline", "url": "http://web.tools.nessops.net/discovery.php", "methods": ["ALL"], "styles": ["http://localhost/css/admin.css"], "routes": []}
     ]
   }
 }
