@@ -2,15 +2,18 @@ module MainModule
   @@routes = Hash.new
 
   def MainModule.parse_config
-    mod_time = File.mtime($resource_root + 'config.json').to_i
+    file = File.new($resource_root + 'config.json')
+    new_time = file.mtime.to_i
+    file.close
+
+    puts "Checking for updated config old: #{@old_time} new: #{new_time}"
 
     # If the config has already been loaded and it hasn't changed then return nil
-    if @mod_time.nil?
-      @mod_time = mod_time
-    elsif @mod_time <= mod_time
+    if !@old_time.nil? && @old_time >= new_time
       return nil
     end
 
+    @old_time = new_time
     JSON.parse open($resource_root + 'config.json').readlines.join " "
   end
 
