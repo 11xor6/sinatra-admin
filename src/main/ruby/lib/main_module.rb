@@ -139,12 +139,8 @@ module MainModule
 
   def MainModule.retrieve_inline_body(url, params, method)
     uri = URI(url)
-    req = Net::HTTP::Post.new(uri.path)
-    req.set_form_data('from' => 'admin', 'method' => method, 'params' => URI.escape(params.to_json))
+    res = Net::HTTP.post_form(uri, {'from' => 'admin', 'method' => method, 'params' => URI.escape(params.to_json)})
 
-    res = Net::HTTP.start("localhost", 80) do |http|
-      http.request(req)
-    end
     res.body
   end
 
