@@ -1,4 +1,3 @@
-%ul
-  - NavItem::get_items.each do |item|
-    %li
-      %a{ :href => item.get_href } #{item.get_name}
+%aside.grey
+  %ul#nav-menu.accordion
+    = haml :left_navigation_item, :locals => {:tools => MainModule::get_config["config"]["tools"]}

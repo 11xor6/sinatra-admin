@@ -239,6 +239,53 @@ iframe {
   min-height: 750px;
 }
 
+.grey {
+  .accordion{
+    font: bold 14px Arial, sans-serif;
+    border-top: 1px solid $primary_color;
+    border-right: 1px solid $primary_color;
+    border-left: 1px solid $primary_color;
+    margin: 0;
+    padding: 0;
+    border: none;
+
+    li {margin: 0; padding: 0; border: none; display: block;}
+
+    a {
+      padding: 10px 10px 10px 50px;
+      background: $primary_color;
+      text-decoration:none;
+      display: block;
+      color: $primary_text_color;
+      border-bottom: 1px solid $highlight_color;
+      border-top: 1px solid $highlight_text_color;
+      position: relative;
+      text-shadow: 1px 1px 1px $highlight_text_color;
+
+      .dcjq-parent .active {};
+      .dcjq-icon {
+        position: absolute;
+        top: 50%; left: 14px;
+        width: 34px;
+        margin-top: -17px;
+        height: 34px;
+        background: url(/img/plus_grey.png) no-repeat 0 center;
+      }
+      &.dcjq-parent.active .dcjq-icon {
+        background: url(/img/minus_grey.png) no-repeat 0 center
+      };
+
+
+      &:hover {background: $primary_color; color: $highlight_color;}
+      &:active{}
+    }
+  }
+}
+
+/*.grey .accordion a.dcjq-parent.active .dcjq-icon {background: url(/img/arrow_grey_down.png) no-repeat 0 center;}*/
+/*.grey .accordion a.dcjq-parent.active .dcjq-icon {background: url(/img/arrow_grey_down.png) no-repeat 0 center; }*/
+
+
 
 /* ===================================================
     Initializr styles

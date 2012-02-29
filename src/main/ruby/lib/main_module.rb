@@ -3,17 +3,17 @@ module MainModule
 
   def MainModule.parse_config
     file = File.new($resource_root + 'config.json')
-    new_time = file.mtime.to_i
+    mod_time = file.mtime.to_i
     file.close
 
-    puts "Checking for updated config old: #{@old_time} new: #{new_time}"
+    puts "Checking for updated config old: #{@mod_time} new: #{mod_time}"
 
     # If the config has already been loaded and it hasn't changed then return nil
-    if !@old_time.nil? && @old_time >= new_time
+    if !@mod_time.nil? && @mod_time >= mod_time
       return nil
     end
 
-    @old_time = new_time
+    @mod_time = mod_time
     JSON.parse open($resource_root + 'config.json').readlines.join " "
   end
 
@@ -34,55 +34,63 @@ module MainModule
       route.deactivate
     end
     @@routes.clear
-    NavItem::clear_items
 
-    config["config"]["tools"].each do |tool|
+    register_tools(config["config"]["tools"])
 
-      type = tool["type"]
-      methods = tool["methods"]
-      if type == "iframe"
-        # iframes only implement GET as there is no need to register anything else.
-        methods = ["GET"]
-      elsif methods.include?("ALL")
-        methods = ["GET", "POST", "PUT", "DELETE", "HEAD"]
-      end
+    # Add the root page
+    root_page = {"path" => "/", "name" => "Home", "type" => "inline", "url" => "/", "methods" => ["GET"]};
+    config["config"]["tools"].unshift root_page
 
-      # Add this item to the menu.
-      NavItem::add_item NavItem.new(tool["path"], tool["name"])
-
-
-      # Generate default route(s) for this tool
-      methods.each do |method|
-
-        case type.downcase
-          when "iframe"
-            # Load the url in an iframe and forget about it.
-            generate_iframe_route method, tool
-          when "inline"
-            # Designed external page to work seamlessly within the framework.
-            generate_inline_route method, tool
-          else
-            throw "unknown tool type"
-        end
-
-      end
-    end
+    @@config = config
   end
 
-  def MainModule.generate_iframe_route(method, tool)
-    path = generalize_path(tool["path"])
+  def MainModule.get_config
+    @@config
+  end
 
-    # This can all be dynamically generated (see the else), but I include it here for clarity.
-    case method.downcase
-      when "get"
-        route = get path do
-          haml :iframe, :locals => {:url => tool["url"]}
-        end
-      else
-        throw "Methods other than 'GET' are not supported for iframes"
+  def self.register_tools(tools, depth = 0)
+    tools.each do |tool|
+
+      case tool["type"].downcase
+        when "menu" :
+          register_tools tool["items"]
+
+
+        when "iframe" :
+          generate_iframe_route tool
+
+
+        when "inline" :
+          if tool["methods"].include?("ALL")
+            methods = ["GET", "POST", "PUT", "DELETE", "HEAD"]
+          else
+            methods = tool["methods"]
+          end
+
+          methods.each do |method|
+            generate_inline_route method, tool
+          end
+
+          # Update the url for navigation.
+          tool["url"] = tool["path"]
+
+        else
+          # Unknown type.
+          throw "unknown type"
+      end
+
     end
 
-    @@routes.store RoutePair.new(method, path), route
+  end
+
+  def MainModule.generate_iframe_route(tool)
+    path = generalize_path(tool["path"])
+
+    route = get path do
+      haml :iframe, :locals => {:url => tool["url"]}
+    end
+
+    @@routes.store RoutePair.new("get", path), route
   end
 
   def MainModule.generate_inline_route(method, tool)
@@ -95,30 +103,13 @@ module MainModule
         route = get path do
           query = MainModule.generate_query({:params => URI.escape(params.to_json), :from => "admin"})
           uri = URI(url + query)
+          pp uri
           res = Net::HTTP.get_response(uri)
 
           haml :inline, :locals => {:body => res.body, :styles => styles}
         end
-      when "post"
+      when "post", "put", "delete", "head"
         route = post path do
-          body = MainModule.retrieve_inline_body(url, params, method)
-
-          haml :inline, :locals => {:body => body, :styles => styles}
-        end
-      when "put"
-        route = put path do
-          body = MainModule.retrieve_inline_body(url, params, method)
-
-          haml :inline, :locals => {:body => body, :styles => styles}
-        end
-      when "delete"
-        route = put path do
-          body = MainModule.retrieve_inline_body(url, params, method)
-
-          haml :inline, :locals => {:body => body, :styles => styles}
-        end
-      when "head"
-        route = put path do
           body = MainModule.retrieve_inline_body(url, params, method)
 
           haml :inline, :locals => {:body => body, :styles => styles}
@@ -127,7 +118,7 @@ module MainModule
       else
         # Here we are dynamically generate a routes for the unknown method.
         # This will probably throw an exception if the method doesn't exist.
-        this.method(method.downcase!.to_sym).call tool["path"] do
+        route = this.method(method.downcase!.to_sym).call tool["path"] do
           body = MainModule.retrieve_inline_body(url, params, method)
 
           haml :inline, :locals => {:body => body, :styles => styles}

@@ -1,13 +1,55 @@
 {
   "config": {
     "tools": [
-        {"path": "/jira", "name": "Jira", "type": "iframe", "url": "http://bugs.nessops.net", "methods": ["ALL"], "routes": []}
-      , {"path": "/wiki", "name": "Confluence", "type": "iframe", "url": "http://confluence.trumpet.io", "methods": ["ALL"], "routes": []}
-      , {"path": "/jenkins", "name": "Jenkins", "type": "iframe", "url": "http://jenkins.trumpet.io", "methods": ["ALL"], "routes": []}
-      , {"path": "/crowd", "name": "Crowd", "type": "iframe", "url": "http://crowd.trumpet.io", "methods": ["ALL"], "routes": []}
-      , {"path": "/depot", "name": "Depot", "type": "iframe", "url": "https://depot.trumpet.io", "methods": ["ALL"], "routes": []}
-      , {"path": "/account", "name": "Account Lookup", "type": "inline", "url": "http://web.tools.nessops.net/account.php", "methods": ["ALL"], "styles": ["http://localhost/css/admin.css"], "routes": []}
-      , {"path": "/discovery", "name": "Discovery Status", "type": "inline", "url": "http://web.tools.nessops.net/discovery.php", "methods": ["ALL"], "styles": ["http://localhost/css/admin.css"], "routes": []}
+     {
+        "name":  "Atlassian",
+        "type": "menu",
+        "items": [
+          {"path": "/jira", "name": "Jira", "type": "iframe", "url": "http://bugs.nessops.net", "methods": ["ALL"]}
+        , {"path": "/wiki", "name": "Confluence", "type": "iframe", "url": "http://wiki.nessops.net", "methods": ["ALL"]}
+        , {"path": "/jenkins", "name": "Jenkins", "type": "iframe", "url": "http://jenkins.nessops.net", "methods": ["ALL"]}
+        , {"path": "/crowd", "name": "Crowd", "type": "iframe", "url": "http://crowd.nessops.net/crowd", "methods": ["ALL"]}
+        ]
+      },
+
+      {
+        "name": "Platform Tools",
+        "type": "menu",
+        "items": [
+            {"path": "/depot", "name": "Depot", "type": "iframe", "url": "https://depot.trumpet.io", "methods": ["ALL"]}
+          , {"path": "/account", "name": "Account Lookup", "type": "inline", "url": "http://web.tools.nessops.net/account.php", "methods": ["ALL"], "styles": ["http://web.tools.nessops.net/css/admin.css"], "routes": []}
+          , {"path": "/discovery", "name": "Discovery Status", "type": "inline", "url": "http://web.tools.nessops.net/discovery.php", "methods": ["ALL"], "styles": ["http://web.tools.nessops.net/css/admin.css"], "routes": []}
+          , {"path": "/source", "name": "Source Code", "type": "iframe", "url": "http://opengrok.tools.nessops.net:8080/source/", "methods": ["ALL"]}
+          , {"path": "/cobbler", "name": "Cobbler Provisioning", "type": "iframe", "url": "http://testing:testing@home.nessops.net/cobbler_web/", "methods": ["ALL"]}
+          , {"path": "/ganglia", "name": "Ganglia", "type": "iframe", "url": "http://ganglia.nessops.net/", "methods": ["ALL"]}
+          , {"path": "/pmca", "name": "Memcache Admin", "type": "iframe", "url": "http://pmca.tools.nessops.net/", "methods": ["ALL"]}
+        ]
+      },
+
+      {
+        "name": "ML Tools",
+        "type": "menu",
+        "items": [
+            {"path": "/search-view", "name": "(Prod) Simple Web-Based Place Search", "type": "iframe", "url": "http://db7-p.trumpet.io:8083/search-view", "methods": ["ALL"]}
+          , {"path": "/place-predicate", "name": "(Prod) Predicate Place Search", "type": "iframe", "url": "http://db7-p.trumpet.io:8083/place-predicate", "methods": ["ALL"]}
+          , {"path": "/search-log", "name": "(Prod) Query Log", "type": "iframe", "url": "http://db7-p.trumpet.io:8083/search-query-log", "methods": ["ALL"]}
+        ]
+      },
+
+      {
+        "name": "Hadoop",
+        "type": "menu",
+        "items": [
+            {"path": "/pri_namenode", "name": "Primary NameNode", "type": "iframe", "url": "http://s0036.nessops.net:50070/", "methods": ["ALL"]}
+          , {"path": "/sec_namenode", "name": "Secondary NameNode", "type": "iframe", "url": "http://s0036.nessops.net:50090/", "methods": ["ALL"]}
+          , {"path": "/tasktracker", "name": "TaskTracker", "type": "iframe", "url": "http://s0036.nessops.net:50030/", "methods": ["ALL"]}
+          , {"path": "/hbase_dev_master", "name": "HBase Prod Master", "type": "iframe", "url": "http://s0036.nessops.net:60010/", "methods": ["ALL"]}
+          , {"path": "/hbase_prod_master", "name": "HBase Dev Master", "type": "iframe", "url": "http://s0036.nessops.net:61010/", "methods": ["ALL"]}
+          , {"path": "/cloudera", "name": "Cloudera Manager", "type": "iframe", "url": "http://s0036.nessops.net:7180", "methods": ["ALL"]}
+          , {"path": "/hue", "name": "Hue", "type": "iframe", "url": "http://s0036.nessops.net:8088/", "methods": ["ALL"]}
+          , {"path": "/oozie", "name": "Oozie", "type": "iframe", "url": "http://s0036.nessops.net:11000/", "methods": ["ALL"]}
+        ]
+      }
     ]
   }
 }

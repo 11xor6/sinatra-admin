@@ -15,7 +15,6 @@ class MainApp
 
 
   # Local includes
-  require $source_root + 'nav_item'
   require $source_root + 'lib/ness_discovery'
   require $source_root + 'lib/main_module'
   require $source_root + 'lib/route_pair'
@@ -43,7 +42,6 @@ class MainApp
   end
 
 
-
   # Initialization
   MainApp::set_header_title "InformedNess"
   MainApp::set_window_title "InformedNess"
@@ -52,11 +50,7 @@ class MainApp
 
   # Pages
   require $source_root + 'root_page'
-  #require $source_root + 'user_lookup_page'
-  #require $source_root + 'discovery_page'
 
-  # External Pages
-  #add_tools
 
   # Global pages
   get '/stylesheets/style.css' do

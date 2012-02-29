@@ -3,8 +3,8 @@ require 'rubygems'
 require 'bundler'
 require 'sinatra'
 
-$source_root = "src/main/galaxy/ruby/"
-$resource_root = "src/main/galaxy/"
+$source_root = "src/main/ruby/"
+$resource_root = ""
 
 require $source_root + 'main_app'
 
