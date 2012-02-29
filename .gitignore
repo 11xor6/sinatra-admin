@@ -3,3 +3,11 @@
 .sass-cache
 Gemfile.lock
 target
+.gems/bin/shotgun
+.gems/cache/bundler-1.0.22.gem
+.gems/cache/shotgun-0.9.gem
+.gems/doc/shotgun-0.9
+.gems/gems/bundler-1.0.22/
+.gems/gems/shotgun-0.9/
+.gems/specifications/bundler-1.0.22.gemspec
+.gems/specifications/shotgun-0.9.gemspec
