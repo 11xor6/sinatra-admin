@@ -101,7 +101,6 @@ module MainModule
         route = get path do
           query = MainModule.generate_query({:params => URI.escape(params.to_json), :from => "admin"})
           uri = URI(url + query)
-          pp uri
           res = Net::HTTP.get_response(uri)
 
           haml :inline, :locals => {:body => res.body, :styles => styles}
