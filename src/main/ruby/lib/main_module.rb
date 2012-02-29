@@ -71,8 +71,6 @@ module MainModule
             generate_inline_route method, tool
           end
 
-          # Update the url for navigation.
-          tool["url"] = tool["path"]
 
         else
           # Unknown type.

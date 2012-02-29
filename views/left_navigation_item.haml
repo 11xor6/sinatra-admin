@@ -6,5 +6,4 @@
         = haml :left_navigation_item, :locals => {:tools => tool["items"]}
   - else
     %li
-      %a{ :href => tool["url"]} #{tool["name"]}
-      -#:onclick => "setTimeout(function() {window.location='#{tool["path"]}'}, 10); return false;"
+      %a{ :href => tool["type"] == "inline" ? tool["path"] : tool["url"], :onclick => "setTimeout(function() {window.location='#{tool["path"]}'}, 10); return false;" } #{tool["name"]}
