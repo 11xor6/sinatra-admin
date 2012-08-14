@@ -68,7 +68,10 @@
         "name": "Analytics",
         "type": "menu",
         "items": [
-            {"path": "/analytics", "name": "Analytics Charting", "type": "iframe", "url": "http://analytics1.nessops.net", "methods": ["ALL"]}
+            {"path": "/analytics", "name": "Daily Analytics Charting", "type": "iframe", "url": "http://analytics.nessops.net/detail.html#pg:active_users_30day", "methods": ["ALL"]}
+          , {"path": "/analytics", "name": "Daily Analytics Dashboards", "type": "iframe", "url": "http://analytics.nessops.net", "methods": ["ALL"]} 
+          , {"path": "/analytics", "name": "Monthly Analytics Charting", "type": "iframe", "url": "http://analytics1.nessops.net/analytics/metrics-monthlydashboard.php", "methods": ["ALL"]}
+          , {"path": "/analytics", "name": "Daily Analytics Charting (Dan's)", "type": "iframe", "url": "http://analytics1.nessops.net", "methods": ["ALL"]}  
         ]
       },
 
