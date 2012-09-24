@@ -15,7 +15,6 @@ class MainApp
 
 
   # Local includes
-  require $source_root + 'lib/ness_discovery'
   require $source_root + 'lib/main_module'
   require $source_root + 'lib/route_pair'
 
